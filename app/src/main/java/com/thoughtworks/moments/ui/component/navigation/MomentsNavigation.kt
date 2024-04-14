@@ -1,45 +1,39 @@
 package com.thoughtworks.moments.ui.component.navigation
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountBox
-import androidx.compose.material.icons.filled.Call
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Share
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.thoughtworks.moments.R
 
 sealed class MomentsNavigationItem(
   val route: String,
-  val icon: ImageVector,
+  val iconId: Int,
   val iconTextId: Int,
   val textLabelId: Int
 ) {
   data object Chat : MomentsNavigationItem(
     route = "Chat",
-    icon = Icons.Default.Home,
+    iconId = R.drawable.outlined_chats,
     iconTextId = R.string.tab_chat_icon_desc,
     textLabelId = R.string.tab_chat
   )
 
   data object Contact : MomentsNavigationItem(
     route = "Contact",
-    icon = Icons.Default.Call,
+    iconId = R.drawable.outlined_contacts,
     iconTextId = R.string.tab_contact_icon_desc,
     textLabelId = R.string.tab_contact
   )
 
   data object Discover : MomentsNavigationItem(
     route = "Discover",
-    icon = Icons.Default.Share,
+    iconId = R.drawable.outlined_discover,
     iconTextId = R.string.tab_discover_icon_desc,
     textLabelId = R.string.tab_discover
   )
 
   data object Me : MomentsNavigationItem(
     route = "Me",
-    icon = Icons.Default.AccountBox,
+    iconId = R.drawable.outlined_me,
     iconTextId = R.string.tab_me_icon_dsc,
     textLabelId = R.string.tab_me
   )

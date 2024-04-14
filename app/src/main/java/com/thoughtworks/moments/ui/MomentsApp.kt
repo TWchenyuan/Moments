@@ -49,11 +49,9 @@ fun MomentsNavHost(modifier: Modifier, navController: NavHostController) {
     composable(Contact.route) {
       TodoScreen()
     }
-
     composable(Discover.route) {
       MomentsScreen()
     }
-
     composable(Me.route) {
       TodoScreen()
     }
