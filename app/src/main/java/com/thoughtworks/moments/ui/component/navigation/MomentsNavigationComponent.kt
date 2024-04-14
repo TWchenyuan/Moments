@@ -1,26 +1,32 @@
 package com.thoughtworks.moments.ui.component.navigation
 
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun MomentsNavigationBar(
   selectedDestination: String,
-  navigateToTopLevelDestination: (String) -> Unit
+  navigateToTopLevelDestination: (MomentsNavigationItem) -> Unit
 ) {
   NavigationBar(modifier = Modifier.fillMaxWidth()) {
-    listOf("Chat", "Contact", "Discover", "Me").forEach {
+    MOMENTS_NAVIGATION_ITEM_LIST.forEach {
       NavigationBarItem(
-        selected = selectedDestination == it,
+        selected = selectedDestination == it.route,
         onClick = { navigateToTopLevelDestination(it) },
-        icon = { /*TODO*/ },
-        label = { Text(it) }
-
+        icon = {
+          Icon(
+            imageVector = it.icon,
+            contentDescription = stringResource(id = it.iconTextId)
+          )
+        },
+        label = { Text(text = stringResource(id = it.textLabelId)) }
       )
     }
   }
@@ -29,5 +35,5 @@ fun MomentsNavigationBar(
 @Preview
 @Composable
 fun MomentsNavigationBarPreview() {
-  MomentsNavigationBar("Home", {})
+  MomentsNavigationBar("Chat", {})
 }

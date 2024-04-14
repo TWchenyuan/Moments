@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Moments</string>
+    <string name="tab_chat_icon_desc">this is a chat icon</string>
+    <string name="tab_contact_icon_desc">this is a contact icon</string>
+    <string name="tab_discover_icon_desc">this is a discover icon</string>
+    <string name="tab_me_icon_dsc">this is a me icon</string>
+    <string name="tab_chat">Chats</string>
+    <string name="tab_contact">Contacts</string>
+    <string name="tab_discover">Discover</string>
+    <string name="tab_me">Me</string>
 </resources>
