@@ -5,5 +5,5 @@ import androidx.compose.runtime.Composable
 
 @Composable
 fun MomentsApp() {
-    Text("Hello world")
+  Text("Hello world")
 }
