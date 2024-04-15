@@ -1,4 +1,4 @@
-package com.thoughtworks.moments.ui.component
+package com.thoughtworks.moments.ui.component.moments
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface

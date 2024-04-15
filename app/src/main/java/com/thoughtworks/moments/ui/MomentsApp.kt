@@ -11,8 +11,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.thoughtworks.moments.ui.component.MomentsDiscoverScreen
-import com.thoughtworks.moments.ui.component.MomentsPageScreen
 import com.thoughtworks.moments.ui.component.TodoScreen
+import com.thoughtworks.moments.ui.component.moments.MomentsPageScreen
 import com.thoughtworks.moments.ui.navigation.MomentsNavigationBar
 import com.thoughtworks.moments.ui.navigation.MomentsNavigationItem.Chat
 import com.thoughtworks.moments.ui.navigation.MomentsNavigationItem.Contact
@@ -31,6 +31,7 @@ fun MomentsAppContent(modifier: Modifier = Modifier) {
   val navBackStackEntry by navController.currentBackStackEntryAsState()
   val selectedDestination = navBackStackEntry?.destination?.route ?: Chat.route
 
+  // TODO use Scaffold
   Column(modifier = modifier.fillMaxSize()) {
     MomentsNavHost(modifier = modifier.weight(1f), navController = navController)
     MomentsNavigationBar(selectedDestination, navController::navigateTo)
@@ -56,6 +57,7 @@ fun MomentsNavHost(modifier: Modifier, navController: NavHostController) {
     composable(Me.route) {
       TodoScreen()
     }
+    // TODO refactor Moments page route
     composable("MomentsPage") {
       MomentsPageScreen()
     }

@@ -39,7 +39,7 @@ fun MomentsDiscoverScreen(modifier: Modifier = Modifier, navController: NavHostC
       .fillMaxSize()
       .windowInsetsPadding(WindowInsets.statusBars)
   ) {
-// top bar
+//  TODO top bar
     Text(text = "Discover", color = Dark100)
     DiscoverList(navigateTo = navController::navigate)
   }
