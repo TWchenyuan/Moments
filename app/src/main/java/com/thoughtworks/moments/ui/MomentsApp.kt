@@ -10,8 +10,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.thoughtworks.moments.ui.component.MomentsDiscoverScreen
+import com.thoughtworks.moments.ui.component.MomentsPageScreen
 import com.thoughtworks.moments.ui.component.TodoScreen
-import com.thoughtworks.moments.ui.component.moments.MomentsDiscoverScreen
 import com.thoughtworks.moments.ui.navigation.MomentsNavigationBar
 import com.thoughtworks.moments.ui.navigation.MomentsNavigationItem.Chat
 import com.thoughtworks.moments.ui.navigation.MomentsNavigationItem.Contact
@@ -50,10 +51,13 @@ fun MomentsNavHost(modifier: Modifier, navController: NavHostController) {
       TodoScreen()
     }
     composable(Discover.route) {
-      MomentsDiscoverScreen()
+      MomentsDiscoverScreen(navController = navController)
     }
     composable(Me.route) {
       TodoScreen()
+    }
+    composable("MomentsPage") {
+      MomentsPageScreen()
     }
   }
 }

@@ -27,12 +27,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.thoughtworks.moments.R
 import com.thoughtworks.moments.ui.theme.Dark100
 import com.thoughtworks.moments.ui.theme.White100
 
 @Composable
-fun MomentsDiscoverScreen(modifier: Modifier = Modifier) {
+fun MomentsDiscoverScreen(modifier: Modifier = Modifier, navController: NavHostController) {
   Column(
     modifier = modifier
       .fillMaxSize()
@@ -40,12 +41,12 @@ fun MomentsDiscoverScreen(modifier: Modifier = Modifier) {
   ) {
 // top bar
     Text(text = "Discover", color = Dark100)
-    DiscoverList()
+    DiscoverList(navigateTo = navController::navigate)
   }
 }
 
 @Composable
-fun DiscoverList(modifier: Modifier = Modifier) {
+fun DiscoverList(modifier: Modifier = Modifier, navigateTo: (destination: String) -> Unit) {
   Box(
     modifier = Modifier
       .fillMaxSize()
@@ -56,7 +57,11 @@ fun DiscoverList(modifier: Modifier = Modifier) {
         .fillMaxWidth()
         .background(White100)
     ) {
-      DiscoverListItem(leftIcon = R.drawable.moment, title = "Moments")
+      DiscoverListItem(
+        leftIcon = R.drawable.moment,
+        title = "Moments",
+        onClick = { navigateTo("MomentsPage") }
+      )
       DiscoverListItem(leftIcon = R.drawable.moment, title = "Others")
     }
   }
@@ -86,7 +91,9 @@ fun DiscoverListItem(
       verticalAlignment = Alignment.CenterVertically
     ) {
       Icon(
-        modifier = Modifier.size(36.dp).padding(8.dp),
+        modifier = Modifier
+          .size(36.dp)
+          .padding(8.dp),
         imageVector = ImageVector.vectorResource(leftIcon),
         contentDescription = "moments icon",
         tint = Color.Unspecified
