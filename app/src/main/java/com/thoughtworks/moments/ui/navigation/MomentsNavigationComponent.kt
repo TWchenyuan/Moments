@@ -1,4 +1,4 @@
-package com.thoughtworks.moments.ui.component.navigation
+package com.thoughtworks.moments.ui.navigation
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Icon

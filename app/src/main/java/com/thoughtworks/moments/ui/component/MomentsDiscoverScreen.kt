@@ -1,6 +1,5 @@
-package com.thoughtworks.moments.ui.component.moments
+package com.thoughtworks.moments.ui.component
 
-import android.graphics.drawable.Icon
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

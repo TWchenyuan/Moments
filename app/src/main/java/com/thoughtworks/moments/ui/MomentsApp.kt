@@ -12,12 +12,12 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.thoughtworks.moments.ui.component.TodoScreen
 import com.thoughtworks.moments.ui.component.moments.MomentsDiscoverScreen
-import com.thoughtworks.moments.ui.component.navigation.MomentsNavigationBar
-import com.thoughtworks.moments.ui.component.navigation.MomentsNavigationItem.Chat
-import com.thoughtworks.moments.ui.component.navigation.MomentsNavigationItem.Contact
-import com.thoughtworks.moments.ui.component.navigation.MomentsNavigationItem.Discover
-import com.thoughtworks.moments.ui.component.navigation.MomentsNavigationItem.Me
-import com.thoughtworks.moments.ui.component.navigation.navigateTo
+import com.thoughtworks.moments.ui.navigation.MomentsNavigationBar
+import com.thoughtworks.moments.ui.navigation.MomentsNavigationItem.Chat
+import com.thoughtworks.moments.ui.navigation.MomentsNavigationItem.Contact
+import com.thoughtworks.moments.ui.navigation.MomentsNavigationItem.Discover
+import com.thoughtworks.moments.ui.navigation.MomentsNavigationItem.Me
+import com.thoughtworks.moments.ui.navigation.navigateTo
 
 @Composable
 fun MomentsApp() {
@@ -28,7 +28,7 @@ fun MomentsApp() {
 fun MomentsAppContent(modifier: Modifier = Modifier) {
   val navController = rememberNavController()
   val navBackStackEntry by navController.currentBackStackEntryAsState()
-  val selectedDestination = navBackStackEntry?.destination?.route ?: Discover.route
+  val selectedDestination = navBackStackEntry?.destination?.route ?: Chat.route
 
   Column(modifier = modifier.fillMaxSize()) {
     MomentsNavHost(modifier = modifier.weight(1f), navController = navController)
@@ -41,7 +41,7 @@ fun MomentsNavHost(modifier: Modifier, navController: NavHostController) {
   NavHost(
     modifier = modifier,
     navController = navController,
-    startDestination = Chat.route
+    startDestination = Discover.route
   ) {
     composable(Chat.route) {
       TodoScreen()
