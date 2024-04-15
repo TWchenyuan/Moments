@@ -6,34 +6,34 @@ import com.thoughtworks.moments.R
 
 sealed class MomentsNavigationItem(
   val route: String,
-  val iconId: Int,
+  val unSelectedIconId: Int,
   val iconTextId: Int,
   val textLabelId: Int
 ) {
   data object Chat : MomentsNavigationItem(
     route = "Chat",
-    iconId = R.drawable.outlined_chats,
+    unSelectedIconId = R.drawable.outlined_chats,
     iconTextId = R.string.tab_chat_icon_desc,
     textLabelId = R.string.tab_chat
   )
 
   data object Contact : MomentsNavigationItem(
     route = "Contact",
-    iconId = R.drawable.outlined_contacts,
+    unSelectedIconId = R.drawable.outlined_contacts,
     iconTextId = R.string.tab_contact_icon_desc,
     textLabelId = R.string.tab_contact
   )
 
   data object Discover : MomentsNavigationItem(
     route = "Discover",
-    iconId = R.drawable.outlined_discover,
+    unSelectedIconId = R.drawable.outlined_discover,
     iconTextId = R.string.tab_discover_icon_desc,
     textLabelId = R.string.tab_discover
   )
 
   data object Me : MomentsNavigationItem(
     route = "Me",
-    iconId = R.drawable.outlined_me,
+    unSelectedIconId = R.drawable.outlined_me,
     iconTextId = R.string.tab_me_icon_dsc,
     textLabelId = R.string.tab_me
   )
