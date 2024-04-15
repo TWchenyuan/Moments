@@ -8,6 +8,7 @@ import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -27,19 +28,23 @@ fun MomentsNavigationBar(
     containerColor = White100
   ) {
     MOMENTS_NAVIGATION_ITEM_LIST.forEach {
+      val selected = selectedDestination == it.route
       NavigationBarItem(
-        selected = selectedDestination == it.route,
+        selected = selected,
         onClick = { navigateToTopLevelDestination(it) },
         icon = {
           Icon(
-            imageVector = ImageVector.vectorResource(it.unSelectedIconId),
+            imageVector = ImageVector.vectorResource(
+              if (selected) it.selectedIconId else it.unSelectedIconId
+            ),
             contentDescription = stringResource(id = it.iconTextId)
           )
         },
         label = { Text(text = stringResource(id = it.textLabelId)) },
         colors = NavigationBarItemDefaults.colors(
           selectedTextColor = Brand100,
-          selectedIconColor = Brand120
+          selectedIconColor = Brand120,
+          indicatorColor = Color.Transparent
         )
       )
     }
