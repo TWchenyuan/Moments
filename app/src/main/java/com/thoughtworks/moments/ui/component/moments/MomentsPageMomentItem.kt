@@ -171,18 +171,12 @@ fun MomentImageGallery(modifier: Modifier = Modifier, images: List<String>) {
       userScrollEnabled = false
     ) {
       items(images.size) {
-        Box(
-          modifier = Modifier
-            .height(spec.imageHeight)
-            .width(spec.imageWidth)
-        ) {
-          AsyncImage(
-            model = images[it],
-            contentDescription = "image in gallery",
-            contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxSize()
-          )
-        }
+        AsyncImage(
+          model = images[it],
+          contentDescription = "image in gallery",
+          contentScale = ContentScale.Crop,
+          modifier = Modifier.height(spec.imageHeight).width(spec.imageWidth)
+        )
       }
     }
   }
