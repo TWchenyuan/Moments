@@ -80,6 +80,7 @@ fun MomentsPageMomentItem(
           modifier = Modifier
             .size(60.dp)
             .padding(10.dp)
+            .clip(RoundedCornerShape(8.dp))
         )
       }
 
