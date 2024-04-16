@@ -175,7 +175,10 @@ fun MomentImageGallery(modifier: Modifier = Modifier, images: List<String>) {
           model = images[it],
           contentDescription = "image in gallery",
           contentScale = ContentScale.Crop,
-          modifier = Modifier.height(spec.imageHeight).width(spec.imageWidth)
+          modifier = Modifier
+            .height(spec.imageHeight)
+            .width(spec.imageWidth)
+            .clip(RoundedCornerShape(4.dp))
         )
       }
     }
