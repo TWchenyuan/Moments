@@ -127,7 +127,7 @@ fun MomentsPageMomentItem(
         Box(
           modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 4.dp)
+            .padding(top = 10.dp)
         ) {
           HorizontalDivider(
             modifier = Modifier
@@ -150,31 +150,39 @@ fun MomentImageGallery(modifier: Modifier = Modifier, images: List<String>) {
       imageHeight = FixedMaxImageHeightOrWidthDp,
       imageWidth = FixedMaxImageHeightOrWidthDp
     )
+
     2, 3 -> GallerySpec(gridHeight = MinImageSizeDp, gridCellsSize = images.size)
     4, 5, 6 -> GallerySpec(gridHeight = TwoLineHeightDp)
     else -> GallerySpec(gridHeight = FixedMaxImageHeightOrWidthDp)
   }
 
-  LazyVerticalGrid(
-    modifier = modifier
-      .fillMaxWidth()
-      .height(spec.gridHeight),
-    verticalArrangement = Arrangement.spacedBy(SpacedInImagesDp),
-    horizontalArrangement = Arrangement.spacedBy(SpacedInImagesDp),
-    columns = GridCells.Fixed(spec.gridCellsSize)
+  Box(
+    modifier = Modifier
+      .fillMaxSize()
+      .padding(vertical = 10.dp)
   ) {
-    items(images.size) {
-      Box(
-        modifier = Modifier
-          .height(spec.imageHeight)
-          .width(spec.imageWidth)
-      ) {
-        AsyncImage(
-          model = images[it],
-          contentDescription = "image in gallery",
-          contentScale = ContentScale.Crop,
-          modifier = Modifier.fillMaxSize()
-        )
+    LazyVerticalGrid(
+      modifier = modifier
+        .fillMaxWidth()
+        .height(spec.gridHeight),
+      verticalArrangement = Arrangement.spacedBy(SpacedInImagesDp),
+      horizontalArrangement = Arrangement.spacedBy(SpacedInImagesDp),
+      columns = GridCells.Fixed(spec.gridCellsSize),
+      userScrollEnabled = false
+    ) {
+      items(images.size) {
+        Box(
+          modifier = Modifier
+            .height(spec.imageHeight)
+            .width(spec.imageWidth)
+        ) {
+          AsyncImage(
+            model = images[it],
+            contentDescription = "image in gallery",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.fillMaxSize()
+          )
+        }
       }
     }
   }
