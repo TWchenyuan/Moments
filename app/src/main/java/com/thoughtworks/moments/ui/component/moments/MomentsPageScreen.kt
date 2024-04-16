@@ -129,7 +129,6 @@ fun MomentListContent(modifier: Modifier = Modifier, moments: List<Moment>) {
   Column(modifier = modifier.fillMaxWidth()) {
     LazyColumn(
       modifier = Modifier
-        .background(Color.Blue)
         .fillMaxWidth()
     ) {
       item {
