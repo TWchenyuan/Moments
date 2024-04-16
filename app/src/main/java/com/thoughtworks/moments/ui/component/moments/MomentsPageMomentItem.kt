@@ -44,9 +44,8 @@ import com.thoughtworks.moments.ui.theme.White97
 
 private val SpacedInImagesDp = 3.dp
 private val MinImageSizeDp = 90.dp
-private val FixedMaxImageHeightOrWidthDp =
-  (MinImageSizeDp.value * 3 + SpacedInImagesDp.value * 2).dp
-private val TwoLineHeightDp = (MinImageSizeDp.value * 2 + SpacedInImagesDp.value).dp
+private val FixedMaxImageHeightOrWidthDp = MinImageSizeDp * 3 + SpacedInImagesDp * 2
+private val TwoLineHeightDp = MinImageSizeDp * 2 + SpacedInImagesDp
 
 data class GallerySpec(
   val gridHeight: Dp,
