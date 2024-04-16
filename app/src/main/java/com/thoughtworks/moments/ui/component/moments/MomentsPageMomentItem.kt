@@ -1,5 +1,6 @@
 package com.thoughtworks.moments.ui.component.moments
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
@@ -25,13 +27,18 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.Placeholder
@@ -46,6 +53,7 @@ import coil.compose.AsyncImage
 import com.thoughtworks.moments.R
 import com.thoughtworks.moments.data.Moment
 import com.thoughtworks.moments.ui.theme.Dark10
+import com.thoughtworks.moments.ui.theme.Dark5
 import com.thoughtworks.moments.ui.theme.DividerColor
 import com.thoughtworks.moments.ui.theme.Link100
 import com.thoughtworks.moments.ui.theme.White100
@@ -175,33 +183,108 @@ fun LikeAndComments(
 
 @Composable
 fun TimeAndMoreButton(createdAt: Long) {
-  Row(
+  val expanded = remember { mutableStateOf(false) }
+  Box(
     modifier = Modifier
       .fillMaxWidth()
-      .padding(vertical = 10.dp)
-      .wrapContentHeight(),
-    verticalAlignment = Alignment.CenterVertically,
-    horizontalArrangement = Arrangement.SpaceBetween
+      .height(40.dp)
   ) {
     Text(
+      modifier = Modifier.align(Alignment.CenterStart),
       text = createdAt.maskTime(),
       style = TextStyle.Default.copy(color = Dark10, fontSize = 15.sp)
     )
-    IconButton(
-      modifier = Modifier
-        .background(White97)
-        .clip(RoundedCornerShape(3.dp))
-        .width(20.dp)
-        .height(15.dp),
 
-      onClick = { /*TODO*/ }
+    Row(
+      modifier = Modifier.align(Alignment.CenterEnd),
+      horizontalArrangement = Arrangement.End,
+      verticalAlignment = Alignment.CenterVertically
     ) {
-      Icon(
-        imageVector = ImageVector.vectorResource(R.drawable.outlined_more),
-        contentDescription = "more button",
-        tint = Link100
-      )
+      AnimatedVisibility(visible = expanded.value) {
+        Surface(
+          modifier = Modifier
+            .wrapContentWidth()
+            .padding(5.dp),
+          shape = RoundedCornerShape(2.dp),
+          color = Dark5,
+          contentColor = White100
+        ) {
+          Row(
+            modifier = Modifier
+              .wrapContentWidth().padding(5.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.End
+          ) {
+            Icon(
+              modifier = Modifier.size(15.dp),
+              imageVector = ImageVector.vectorResource(R.drawable.outlined_like),
+              contentDescription = stringResource(R.string.ic_like_action_icon)
+            )
+            Text(
+              text = stringResource(R.string.like_menu_item),
+              style = TextStyle.Default.copy(fontSize = 15.sp)
+            )
+            VerticalDivider(
+              modifier = Modifier
+                .width(1.dp)
+                .padding(vertical = 2.dp)
+            )
+            Icon(
+              modifier = Modifier.size(15.dp),
+              imageVector = ImageVector.vectorResource(R.drawable.outlined_comment),
+              contentDescription = stringResource(R.string.ic_comment_action_icon)
+            )
+            Text(
+              text = stringResource(R.string.comment_menu_item),
+              style = TextStyle.Default.copy(fontSize = 15.sp)
+            )
+          }
+        }
+      }
+      IconButton(
+        modifier = Modifier
+          .background(White97)
+          .clip(RoundedCornerShape(3.dp))
+          .width(20.dp)
+          .height(15.dp),
+
+        onClick = { expanded.value = !expanded.value }
+      ) {
+        Icon(
+          imageVector = ImageVector.vectorResource(R.drawable.outlined_more),
+          contentDescription = stringResource(R.string.ic_more_button),
+          tint = Link100
+        )
+      }
     }
+//    Row(
+//      modifier = Modifier
+//        .fillMaxWidth()
+//        .padding(vertical = 10.dp)
+//        .wrapContentHeight(),
+//      verticalAlignment = Alignment.CenterVertically,
+//      horizontalArrangement = Arrangement.SpaceBetween
+//    ) {
+//      Text(
+//        text = createdAt.maskTime(),
+//        style = TextStyle.Default.copy(color = Dark10, fontSize = 15.sp)
+//      )
+//      IconButton(
+//        modifier = Modifier
+//          .background(White97)
+//          .clip(RoundedCornerShape(3.dp))
+//          .width(20.dp)
+//          .height(15.dp),
+//
+//        onClick = { expanded.value = true }
+//      ) {
+//        Icon(
+//          imageVector = ImageVector.vectorResource(R.drawable.outlined_more),
+//          contentDescription = "more button",
+//          tint = Link100
+//        )
+//      }
+//    }
   }
 }
 

@@ -8,4 +8,9 @@
     <string name="tab_contact">Contacts</string>
     <string name="tab_discover">Discover</string>
     <string name="tab_me">Me</string>
+    <string name="like_menu_item">Like</string>
+    <string name="comment_menu_item">Comment</string>
+    <string name="ic_like_action_icon">like action icon</string>
+    <string name="ic_comment_action_icon">comment action icon</string>
+    <string name="ic_more_button">more button</string>
 </resources>
