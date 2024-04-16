@@ -5,12 +5,15 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -22,10 +25,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
@@ -36,6 +41,19 @@ import com.thoughtworks.moments.ui.theme.DividerColor
 import com.thoughtworks.moments.ui.theme.Link100
 import com.thoughtworks.moments.ui.theme.White100
 import com.thoughtworks.moments.ui.theme.White97
+
+private val SpacedInImagesDp = 3.dp
+private val MinImageSizeDp = 90.dp
+private val FixedMaxImageHeightOrWidthDp =
+  (MinImageSizeDp.value * 3 + SpacedInImagesDp.value * 2).dp
+private val TwoLineHeightDp = (MinImageSizeDp.value * 2 + SpacedInImagesDp.value).dp
+
+data class GallerySpec(
+  val gridHeight: Dp,
+  val gridCellsSize: Int = 3,
+  val imageHeight: Dp = 90.dp,
+  val imageWidth: Dp = 90.dp
+)
 
 @Composable
 fun MomentsPageMomentItem(
@@ -76,7 +94,7 @@ fun MomentsPageMomentItem(
         )
         Text(text = moment.content, modifier = Modifier.padding(vertical = 3.dp))
         if (moment.images.isNotEmpty()) {
-          MomentImageGallery(images = moment.images)
+          MomentImageGallery(images = moment.images.take(9))
         }
         Row(
           modifier = Modifier
@@ -124,6 +142,40 @@ fun MomentsPageMomentItem(
 
 @Composable
 fun MomentImageGallery(modifier: Modifier = Modifier, images: List<String>) {
-  // TODO
-  Text(text = "Image place holder")
+  val spec = when (images.size) {
+    0 -> GallerySpec(gridHeight = 0.dp, 0, 0.dp, 0.dp)
+    1 -> GallerySpec(
+      gridHeight = FixedMaxImageHeightOrWidthDp,
+      gridCellsSize = images.size,
+      imageHeight = FixedMaxImageHeightOrWidthDp,
+      imageWidth = FixedMaxImageHeightOrWidthDp
+    )
+    2, 3 -> GallerySpec(gridHeight = MinImageSizeDp, gridCellsSize = images.size)
+    4, 5, 6 -> GallerySpec(gridHeight = TwoLineHeightDp)
+    else -> GallerySpec(gridHeight = FixedMaxImageHeightOrWidthDp)
+  }
+
+  LazyVerticalGrid(
+    modifier = modifier
+      .fillMaxWidth()
+      .height(spec.gridHeight),
+    verticalArrangement = Arrangement.spacedBy(SpacedInImagesDp),
+    horizontalArrangement = Arrangement.spacedBy(SpacedInImagesDp),
+    columns = GridCells.Fixed(spec.gridCellsSize)
+  ) {
+    items(images.size) {
+      Box(
+        modifier = Modifier
+          .height(spec.imageHeight)
+          .width(spec.imageWidth)
+      ) {
+        AsyncImage(
+          model = images[it],
+          contentDescription = "image in gallery",
+          contentScale = ContentScale.Crop,
+          modifier = Modifier.fillMaxSize()
+        )
+      }
+    }
+  }
 }

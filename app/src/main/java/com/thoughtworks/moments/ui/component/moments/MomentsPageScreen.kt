@@ -53,12 +53,10 @@ fun MomentsPageScreen(
   val momentsPageUiState by viewModel.momentsPageUiState.collectAsStateWithLifecycle()
 
   Box(modifier = modifier.fillMaxSize()) {
-    Column {
-      MomentListContent(
-        moments = momentsPageUiState.latestMoments,
-        currentAccount = momentsPageUiState.current
-      )
-    }
+    MomentListContent(
+      moments = momentsPageUiState.latestMoments,
+      currentAccount = momentsPageUiState.current
+    )
   }
 }
 
