@@ -34,6 +34,7 @@ import com.thoughtworks.moments.data.Moment
 import com.thoughtworks.moments.ui.theme.Dark10
 import com.thoughtworks.moments.ui.theme.DividerColor
 import com.thoughtworks.moments.ui.theme.Link100
+import com.thoughtworks.moments.ui.theme.White100
 import com.thoughtworks.moments.ui.theme.White97
 
 @Composable
@@ -48,7 +49,7 @@ fun MomentsPageMomentItem(
       .wrapContentHeight()
       .padding(10.dp)
   ) {
-    Row(modifier = Modifier.fillMaxWidth()) {
+    Row(modifier = Modifier.fillMaxWidth().background(White100)) {
       Surface(modifier = Modifier.size(60.dp), shape = RoundedCornerShape(8.dp)) {
         Image(
           painter = painterResource(id = R.drawable.default_avatar),
@@ -64,8 +65,7 @@ fun MomentsPageMomentItem(
           text = moment.sender.nick,
           style = TextStyle.Default.copy(
             color = Link100,
-            fontWeight = FontWeight.Bold,
-            fontSize = 20.sp
+            fontWeight = FontWeight.Bold
           ),
           modifier = Modifier.padding(vertical = 5.dp)
         )

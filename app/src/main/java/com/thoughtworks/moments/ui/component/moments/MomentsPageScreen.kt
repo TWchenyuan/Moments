@@ -7,10 +7,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -127,18 +125,17 @@ fun Account(modifier: Modifier = Modifier, nickName: String, avatar: Painter) {
 
 @Composable
 fun MomentListContent(modifier: Modifier = Modifier, moments: List<Moment>) {
-  Column(modifier = modifier.fillMaxWidth()) {
+  Column(modifier = modifier.fillMaxWidth().background(White100)) {
     LazyColumn(
       modifier = Modifier
         .fillMaxWidth()
     ) {
-      item {
-        Spacer(
-          modifier = Modifier
-            .height(100.dp)
-            .background(Color.Yellow)
-        )
-      }
+//      item {
+//        Spacer(
+//          modifier = Modifier
+//            .height(100.dp)
+//        )
+//      }
       items(moments) {
         MomentsPageMomentItem(moment = it)
       }
