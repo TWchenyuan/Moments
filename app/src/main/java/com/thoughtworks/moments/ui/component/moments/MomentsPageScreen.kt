@@ -2,7 +2,6 @@ package com.thoughtworks.moments.ui.component.moments
 
 import android.app.Activity
 import androidx.annotation.DrawableRes
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,7 +26,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalView
@@ -40,7 +38,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import coil.compose.AsyncImage
 import com.thoughtworks.moments.R
+import com.thoughtworks.moments.data.Account
 import com.thoughtworks.moments.data.Moment
 import com.thoughtworks.moments.ui.theme.White100
 import org.koin.androidx.compose.koinViewModel
@@ -54,14 +54,22 @@ fun MomentsPageScreen(
 
   Box(modifier = modifier.fillMaxSize()) {
     Column {
-      MomentsPageImmersiveHeader(imageId = R.drawable.pic_image_01)
-      MomentListContent(moments = momentsPageUiState.latestMoments)
+      MomentListContent(
+        moments = momentsPageUiState.latestMoments,
+        currentAccount = momentsPageUiState.current
+      )
     }
   }
 }
 
 @Composable
-fun MomentsPageImmersiveHeader(modifier: Modifier = Modifier, @DrawableRes imageId: Int) {
+fun MomentsPageImmersiveCover(
+  modifier: Modifier = Modifier,
+  cover: String,
+  avatar: String,
+  nick: String,
+  @DrawableRes defaultCover: Int = R.drawable.pic_image_01
+) {
   val view = LocalView.current
   if (!view.isInEditMode) {
     SideEffect {
@@ -74,9 +82,10 @@ fun MomentsPageImmersiveHeader(modifier: Modifier = Modifier, @DrawableRes image
         .fillMaxWidth()
         .wrapContentHeight()
     ) {
-      Image(
+      AsyncImage(
+        model = cover,
         modifier = Modifier.fillMaxWidth(),
-        painter = painterResource(id = imageId),
+        placeholder = painterResource(id = defaultCover),
         contentDescription = "immersive image"
       )
       IconButton(
@@ -95,15 +104,21 @@ fun MomentsPageImmersiveHeader(modifier: Modifier = Modifier, @DrawableRes image
         modifier = Modifier
           .align(Alignment.BottomEnd)
           .offset(0.dp, 30.dp),
-        nickName = "Jason",
-        avatar = painterResource(id = R.drawable.default_avatar)
+        nickName = nick,
+        avatar = avatar,
+        defaultAvatar = R.drawable.default_avatar
       )
     }
   }
 }
 
 @Composable
-fun Account(modifier: Modifier = Modifier, nickName: String, avatar: Painter) {
+fun Account(
+  modifier: Modifier = Modifier,
+  nickName: String,
+  avatar: String,
+  @DrawableRes defaultAvatar: Int = R.drawable.default_avatar
+) {
   Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
     Text(
       text = nickName,
@@ -112,11 +127,12 @@ fun Account(modifier: Modifier = Modifier, nickName: String, avatar: Painter) {
       style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 22.sp)
     )
     Surface(modifier = Modifier.size(100.dp), shape = RoundedCornerShape(8.dp)) {
-      Image(
+      AsyncImage(
         modifier = Modifier
           .size(100.dp)
           .clip(RoundedCornerShape(8.dp)),
-        painter = avatar,
+        model = avatar,
+        placeholder = painterResource(id = defaultAvatar),
         contentDescription = "account avatar"
       )
     }
@@ -124,8 +140,16 @@ fun Account(modifier: Modifier = Modifier, nickName: String, avatar: Painter) {
 }
 
 @Composable
-fun MomentListContent(modifier: Modifier = Modifier, moments: List<Moment>) {
-  Column(modifier = modifier.fillMaxWidth().background(White100)) {
+fun MomentListContent(
+  modifier: Modifier = Modifier,
+  moments: List<Moment>,
+  currentAccount: Account
+) {
+  Column(
+    modifier = modifier
+      .fillMaxWidth()
+      .background(White100)
+  ) {
     LazyColumn(
       modifier = Modifier
         .fillMaxWidth()
@@ -136,6 +160,14 @@ fun MomentListContent(modifier: Modifier = Modifier, moments: List<Moment>) {
 //            .height(100.dp)
 //        )
 //      }
+      item {
+        MomentsPageImmersiveCover(
+          defaultCover = R.drawable.pic_image_01,
+          cover = currentAccount.cover,
+          avatar = currentAccount.avatar,
+          nick = currentAccount.nick
+        )
+      }
       items(moments) {
         MomentsPageMomentItem(moment = it)
       }

@@ -1,6 +1,5 @@
 package com.thoughtworks.moments.ui.component.moments
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -29,6 +28,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.thoughtworks.moments.R
 import com.thoughtworks.moments.data.Moment
 import com.thoughtworks.moments.ui.theme.Dark10
@@ -49,10 +49,15 @@ fun MomentsPageMomentItem(
       .wrapContentHeight()
       .padding(10.dp)
   ) {
-    Row(modifier = Modifier.fillMaxWidth().background(White100)) {
+    Row(
+      modifier = Modifier
+        .fillMaxWidth()
+        .background(White100)
+    ) {
       Surface(modifier = Modifier.size(60.dp), shape = RoundedCornerShape(8.dp)) {
-        Image(
-          painter = painterResource(id = R.drawable.default_avatar),
+        AsyncImage(
+          model = moment.sender.avatar,
+          placeholder = painterResource(id = R.drawable.default_avatar),
           contentDescription = "avatar",
           modifier = Modifier
             .size(60.dp)
@@ -101,7 +106,11 @@ fun MomentsPageMomentItem(
           }
         }
         // TODO LIKE
-        Box(modifier = Modifier.fillMaxWidth().padding(top = 4.dp)) {
+        Box(
+          modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 4.dp)
+        ) {
           HorizontalDivider(
             modifier = Modifier
               .height(1.dp)

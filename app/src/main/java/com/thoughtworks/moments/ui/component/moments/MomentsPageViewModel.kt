@@ -33,9 +33,11 @@ class MomentsPageViewModel(
   private fun loadMoments() {
     viewModelScope.launch {
       try {
+        val current = accounts.currentAccount()
         val moments = moments.latestMoments()
         _momentsPageUiState.value = _momentsPageUiState.value.copy(
-          latestMoments = moments
+          latestMoments = moments,
+          current = current
         )
       } catch (e: Exception) {
         _momentsPageUiState.value = _momentsPageUiState.value.copy(

@@ -70,6 +70,8 @@ dependencies {
   // koin
   implementation(platform(libs.koin.bom))
   implementation(libs.koin.androidx.compose)
+  // koil compose
+  implementation(libs.coil.compose)
 
   implementation(libs.converter.gson)
   implementation(libs.retrofit)
