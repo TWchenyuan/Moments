@@ -1,6 +1,5 @@
 package com.thoughtworks.moments.ui.component.moments
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.thoughtworks.moments.data.Account
@@ -32,11 +31,9 @@ class MomentsPageViewModel(
   }
 
   private fun loadMoments() {
-    Log.i("moments", "Get Moments")
     viewModelScope.launch {
       try {
         val moments = moments.latestMoments()
-        Log.i("moments", "Get Moments ${moments.size}")
         _momentsPageUiState.value = _momentsPageUiState.value.copy(
           latestMoments = moments
         )
