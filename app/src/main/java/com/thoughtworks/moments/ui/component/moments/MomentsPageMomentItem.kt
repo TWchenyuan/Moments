@@ -89,7 +89,9 @@ fun MomentsPageMomentItem(
           MomentImageGallery(images = moment.images.take(9), onImageClick = onImageClick)
         }
         TimeAndMoreButton(moment.createdAt)
-        LikeAndComments(likes = moment.likes, comments = moment.comments)
+        if (moment.likes.isNotEmpty() || moment.comments.isNotEmpty()) {
+          LikeAndComments(likes = moment.likes, comments = moment.comments)
+        }
         MomentDivider()
       }
     }
