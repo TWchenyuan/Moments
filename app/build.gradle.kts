@@ -68,8 +68,11 @@ dependencies {
   implementation(libs.androidx.navigation.compose)
   implementation(libs.androidx.lifecycle.runtime.compose)
   // koin
-  implementation(libs.koin.bom)
+  implementation(platform(libs.koin.bom))
   implementation(libs.koin.androidx.compose)
+
+  implementation(libs.converter.gson)
+  implementation(libs.retrofit)
 
   testImplementation(libs.junit)
   androidTestImplementation(libs.androidx.junit)
