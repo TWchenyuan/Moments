@@ -170,12 +170,6 @@ fun MomentListContent(
       modifier = Modifier
         .fillMaxWidth()
     ) {
-//      item {
-//        Spacer(
-//          modifier = Modifier
-//            .height(100.dp)
-//        )
-//      }
       item {
         MomentsPageImmersiveCover(
           defaultCover = R.drawable.pic_image_01,

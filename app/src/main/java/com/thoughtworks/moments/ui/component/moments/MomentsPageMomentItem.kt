@@ -17,9 +17,12 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.InlineTextContent
+import androidx.compose.foundation.text.appendInlineContent
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,8 +33,12 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.Placeholder
+import androidx.compose.ui.text.PlaceholderVerticalAlign
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -43,6 +50,7 @@ import com.thoughtworks.moments.ui.theme.DividerColor
 import com.thoughtworks.moments.ui.theme.Link100
 import com.thoughtworks.moments.ui.theme.White100
 import com.thoughtworks.moments.ui.theme.White97
+import com.thoughtworks.moments.ui.util.maskTime
 
 private val SpacedInImagesDp = 3.dp
 private val MinImageSizeDp = 90.dp
@@ -73,72 +81,155 @@ fun MomentsPageMomentItem(
         .fillMaxWidth()
         .background(White100)
     ) {
-      Surface(modifier = Modifier.size(60.dp), shape = RoundedCornerShape(8.dp)) {
-        AsyncImage(
-          model = moment.sender.avatar,
-          placeholder = painterResource(id = R.drawable.default_avatar),
-          contentDescription = "avatar",
-          modifier = Modifier
-            .size(60.dp)
-            .padding(10.dp)
-            .clip(RoundedCornerShape(8.dp))
-        )
-      }
-
+      FriendsAvatar(moment.sender.avatar)
       Column(modifier = Modifier.padding(start = 10.dp, end = 10.dp)) {
-        Text(
-          text = moment.sender.nick,
-          style = TextStyle.Default.copy(
-            color = Link100,
-            fontWeight = FontWeight.Bold
-          ),
-          modifier = Modifier.padding(vertical = 5.dp)
-        )
-        Text(text = moment.content, modifier = Modifier.padding(vertical = 3.dp))
+        FriendsNick(moment.sender.nick)
+        FriendsMomentContent(moment.content)
         if (moment.images.isNotEmpty()) {
           MomentImageGallery(images = moment.images.take(9), onImageClick = onImageClick)
         }
-        Row(
-          modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight(),
-          verticalAlignment = Alignment.CenterVertically,
-          horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-          Text(
-            text = "11 hrs ago",
-            style = TextStyle.Default.copy(color = Dark10, fontSize = 15.sp)
-          )
-          IconButton(
-            modifier = Modifier
-              .background(White97)
-              .clip(RoundedCornerShape(3.dp))
-              .width(20.dp)
-              .height(15.dp),
-
-            onClick = { /*TODO*/ }
-          ) {
-            Icon(
-              imageVector = ImageVector.vectorResource(R.drawable.outlined_more),
-              contentDescription = "more button",
-              tint = Link100
-            )
-          }
-        }
-        // TODO LIKE
-        Box(
-          modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 10.dp)
-        ) {
-          HorizontalDivider(
-            modifier = Modifier
-              .height(1.dp)
-              .background(DividerColor)
-          )
-        }
+        TimeAndMoreButton(moment.createdAt)
+        LikeAndComments(likes = moment.likes, comments = moment.comments)
+        MomentDivider()
       }
     }
+  }
+}
+
+@Composable
+fun MomentDivider() {
+  Box(
+    modifier = Modifier
+      .fillMaxWidth()
+      .padding(top = 10.dp)
+  ) {
+    HorizontalDivider(
+      modifier = Modifier
+        .height(1.dp)
+        .background(DividerColor)
+    )
+  }
+}
+
+@Composable
+fun LikeAndComments(
+  modifier: Modifier = Modifier,
+  likes: List<String>,
+  comments: List<Moment.Comment>
+) {
+  val likeListString = likes.joinToString(", ")
+  Column(
+    modifier = modifier
+      .fillMaxWidth()
+      .background(White97)
+      .padding(10.dp)
+  ) {
+    if (likes.isNotEmpty()) {
+      Text(
+        text = buildAnnotatedString {
+          appendInlineContent("inlineContent", "[like]")
+          append(likeListString)
+        },
+        style = MaterialTheme.typography.labelLarge,
+        inlineContent = mapOf(
+          Pair(
+            "inlineContent",
+            InlineTextContent(
+              placeholder = Placeholder(
+                width = 16.sp,
+                height = 16.sp,
+                placeholderVerticalAlign = PlaceholderVerticalAlign.TextCenter
+              )
+            ) {
+              Icon(
+                modifier = Modifier.fillMaxWidth(),
+                imageVector = ImageVector.vectorResource(R.drawable.outlined_like),
+                contentDescription = "like icon"
+              )
+            }
+          )
+        )
+      )
+    }
+
+    comments.forEach {
+      Text(
+        modifier = Modifier
+          .fillMaxWidth(),
+        text = AnnotatedString.Builder("").apply {
+          pushStyle(
+            SpanStyle(
+              color = Link100
+            )
+          )
+          append(it.senderNick)
+          pop()
+          append(" :${it.content}")
+        }.toAnnotatedString()
+      )
+    }
+  }
+}
+
+@Composable
+fun TimeAndMoreButton(createdAt: Long) {
+  Row(
+    modifier = Modifier
+      .fillMaxWidth()
+      .padding(vertical = 10.dp)
+      .wrapContentHeight(),
+    verticalAlignment = Alignment.CenterVertically,
+    horizontalArrangement = Arrangement.SpaceBetween
+  ) {
+    Text(
+      text = createdAt.maskTime(),
+      style = TextStyle.Default.copy(color = Dark10, fontSize = 15.sp)
+    )
+    IconButton(
+      modifier = Modifier
+        .background(White97)
+        .clip(RoundedCornerShape(3.dp))
+        .width(20.dp)
+        .height(15.dp),
+
+      onClick = { /*TODO*/ }
+    ) {
+      Icon(
+        imageVector = ImageVector.vectorResource(R.drawable.outlined_more),
+        contentDescription = "more button",
+        tint = Link100
+      )
+    }
+  }
+}
+
+@Composable
+fun FriendsMomentContent(content: String) {
+  // TODO show more
+  Text(text = content, modifier = Modifier.padding(vertical = 3.dp))
+}
+
+@Composable
+fun FriendsNick(nick: String) {
+  Text(
+    text = nick,
+    style = MaterialTheme.typography.labelLarge,
+    modifier = Modifier.padding(vertical = 5.dp)
+  )
+}
+
+@Composable
+fun FriendsAvatar(avatar: String) {
+  Surface(modifier = Modifier.size(60.dp), shape = RoundedCornerShape(8.dp)) {
+    AsyncImage(
+      model = avatar,
+      placeholder = painterResource(id = R.drawable.default_avatar),
+      contentDescription = "avatar",
+      modifier = Modifier
+        .size(60.dp)
+        .padding(10.dp)
+        .clip(RoundedCornerShape(8.dp))
+    )
   }
 }
 
