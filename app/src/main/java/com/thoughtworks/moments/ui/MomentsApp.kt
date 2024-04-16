@@ -1,5 +1,6 @@
 package com.thoughtworks.moments.ui
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -13,6 +14,7 @@ import androidx.navigation.compose.rememberNavController
 import com.thoughtworks.moments.ui.component.MomentsDiscoverScreen
 import com.thoughtworks.moments.ui.component.TodoScreen
 import com.thoughtworks.moments.ui.component.moments.MomentsPageScreen
+import com.thoughtworks.moments.ui.navigation.MOMENTS_NAVIGATION_ITEM_LIST
 import com.thoughtworks.moments.ui.navigation.MomentsNavigationBar
 import com.thoughtworks.moments.ui.navigation.MomentsNavigationItem.Chat
 import com.thoughtworks.moments.ui.navigation.MomentsNavigationItem.Contact
@@ -34,7 +36,12 @@ fun MomentsAppContent(modifier: Modifier = Modifier) {
   // TODO use Scaffold
   Column(modifier = modifier.fillMaxSize()) {
     MomentsNavHost(modifier = modifier.weight(1f), navController = navController)
-    MomentsNavigationBar(selectedDestination, navController::navigateTo)
+    AnimatedVisibility(
+      visible = MOMENTS_NAVIGATION_ITEM_LIST.map { it.route }
+        .contains(selectedDestination)
+    ) {
+      MomentsNavigationBar(selectedDestination, navController::navigateTo)
+    }
   }
 }
 
