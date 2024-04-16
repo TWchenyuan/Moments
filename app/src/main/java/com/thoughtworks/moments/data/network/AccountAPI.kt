@@ -1,10 +1,10 @@
 package com.thoughtworks.moments.data.network
 
-import com.thoughtworks.moments.data.Account
+import com.thoughtworks.moments.data.network.model.AccountData
 import retrofit2.http.GET
 
 interface AccountAPI {
 
-  @GET("/user.json")
-  suspend fun getAccount(): Account
+  @GET("/moments-data/user.json")
+  suspend fun getAccount(): AccountData
 }

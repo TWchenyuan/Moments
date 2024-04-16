@@ -5,7 +5,8 @@ data class MomentData(
   val images: List<MomentImage>?,
   val sender: MomentSender?,
   val comments: List<MomentComment>?,
-  val date: String?
+  val date: String?,
+  val error: String?
 ) {
   data class MomentImage(val url: String)
 

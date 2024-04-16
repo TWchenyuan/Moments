@@ -3,7 +3,7 @@ package com.thoughtworks.moments.data.network
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-const val BASE_URL = "https://xianmobilelab.gitlab.io/moments-data/"
+const val BASE_URL = "https://xianmobilelab.gitlab.io"
 fun provideRetrofit(): Retrofit = Retrofit.Builder()
   .baseUrl(BASE_URL)
   .addConverterFactory(GsonConverterFactory.create())

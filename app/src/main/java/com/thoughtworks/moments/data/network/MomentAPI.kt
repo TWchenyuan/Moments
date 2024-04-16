@@ -5,6 +5,6 @@ import retrofit2.http.GET
 
 interface MomentAPI {
 
-  @GET("/tweets.json")
+  @GET("/moments-data/tweets.json")
   suspend fun listMoments(): List<MomentData>
 }
