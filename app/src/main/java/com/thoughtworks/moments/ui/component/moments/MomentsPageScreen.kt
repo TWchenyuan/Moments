@@ -2,6 +2,7 @@ package com.thoughtworks.moments.ui.component.moments
 
 import android.app.Activity
 import androidx.annotation.DrawableRes
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -42,6 +43,7 @@ import coil.compose.AsyncImage
 import com.thoughtworks.moments.R
 import com.thoughtworks.moments.data.Account
 import com.thoughtworks.moments.data.Moment
+import com.thoughtworks.moments.ui.component.ImagePreviewScreen
 import com.thoughtworks.moments.ui.theme.White100
 import org.koin.androidx.compose.koinViewModel
 
@@ -52,11 +54,26 @@ fun MomentsPageScreen(
 ) {
   val momentsPageUiState by viewModel.momentsPageUiState.collectAsStateWithLifecycle()
 
+  val enterImagePreview by viewModel.enterImagePreviewUiState.collectAsStateWithLifecycle()
+  val imagePreviewUiState by viewModel.momentsPageImagePreviewUiState.collectAsStateWithLifecycle()
+
   Box(modifier = modifier.fillMaxSize()) {
     MomentListContent(
       moments = momentsPageUiState.latestMoments,
-      currentAccount = momentsPageUiState.current
+      currentAccount = momentsPageUiState.current,
+      onImageClick = { selectedImageIndex, images ->
+        viewModel.enterImagePreviewScreen(
+          selectedImageIndex,
+          images
+        )
+      }
     )
+    AnimatedVisibility(visible = enterImagePreview) {
+      ImagePreviewScreen(
+        selectedImageIndex = imagePreviewUiState.currentImagePreviewIndex,
+        images = imagePreviewUiState.currentImageList
+      ) { viewModel.exitImagePreviewScreen() }
+    }
   }
 }
 
@@ -141,7 +158,8 @@ fun Account(
 fun MomentListContent(
   modifier: Modifier = Modifier,
   moments: List<Moment>,
-  currentAccount: Account
+  currentAccount: Account,
+  onImageClick: (selectedImageIndex: Int, images: List<String>) -> Unit
 ) {
   Column(
     modifier = modifier
@@ -167,7 +185,7 @@ fun MomentListContent(
         )
       }
       items(moments) {
-        MomentsPageMomentItem(moment = it)
+        MomentsPageMomentItem(moment = it, onImageClick = onImageClick)
       }
     }
   }

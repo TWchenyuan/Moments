@@ -1,6 +1,7 @@
 package com.thoughtworks.moments.ui.component.moments
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -58,7 +60,7 @@ data class GallerySpec(
 fun MomentsPageMomentItem(
   modifier: Modifier = Modifier,
   moment: Moment,
-  onLickClick: () -> Unit = {}
+  onImageClick: (selectedImageIndex: Int, images: List<String>) -> Unit
 ) {
   Surface(
     modifier = modifier
@@ -94,7 +96,7 @@ fun MomentsPageMomentItem(
         )
         Text(text = moment.content, modifier = Modifier.padding(vertical = 3.dp))
         if (moment.images.isNotEmpty()) {
-          MomentImageGallery(images = moment.images.take(9))
+          MomentImageGallery(images = moment.images.take(9), onImageClick = onImageClick)
         }
         Row(
           modifier = Modifier
@@ -141,7 +143,11 @@ fun MomentsPageMomentItem(
 }
 
 @Composable
-fun MomentImageGallery(modifier: Modifier = Modifier, images: List<String>) {
+fun MomentImageGallery(
+  modifier: Modifier = Modifier,
+  images: List<String>,
+  onImageClick: (selectedImageIndex: Int, images: List<String>) -> Unit
+) {
   val spec = when (images.size) {
     0 -> GallerySpec(gridHeight = 0.dp, 0, 0.dp, 0.dp)
     1 -> GallerySpec(
@@ -170,15 +176,16 @@ fun MomentImageGallery(modifier: Modifier = Modifier, images: List<String>) {
       columns = GridCells.Fixed(spec.gridCellsSize),
       userScrollEnabled = false
     ) {
-      items(images.size) {
+      itemsIndexed(images) { index, item ->
         AsyncImage(
-          model = images[it],
+          model = item,
           contentDescription = "image in gallery",
           contentScale = ContentScale.Crop,
           modifier = Modifier
             .height(spec.imageHeight)
             .width(spec.imageWidth)
             .clip(RoundedCornerShape(4.dp))
+            .clickable { onImageClick(index, images) }
         )
       }
     }

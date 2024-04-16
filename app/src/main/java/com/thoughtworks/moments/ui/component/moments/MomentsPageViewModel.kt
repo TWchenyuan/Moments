@@ -16,6 +16,11 @@ data class MomentsPageUiState(
   val loadError: String? = null
 )
 
+data class MomentsPageImagePreviewUiState(
+  val currentImagePreviewIndex: Int = 0,
+  val currentImageList: List<String> = emptyList()
+)
+
 class MomentsPageViewModel(
   private val accounts: AccountRepository,
   private val moments: MomentRepository
@@ -25,6 +30,18 @@ class MomentsPageViewModel(
     MomentsPageUiState()
   )
   val momentsPageUiState: StateFlow<MomentsPageUiState> get() = _momentsPageUiState
+
+  private val _momentsPageImagePreviewUiState: MutableStateFlow<MomentsPageImagePreviewUiState> =
+    MutableStateFlow(
+      MomentsPageImagePreviewUiState()
+    )
+
+  val momentsPageImagePreviewUiState: StateFlow<MomentsPageImagePreviewUiState>
+    get() =
+      _momentsPageImagePreviewUiState
+
+  private val _enterImagePreviewUiState: MutableStateFlow<Boolean> = MutableStateFlow(false)
+  val enterImagePreviewUiState: StateFlow<Boolean> get() = _enterImagePreviewUiState
 
   init {
     loadMoments()
@@ -45,5 +62,17 @@ class MomentsPageViewModel(
         )
       }
     }
+  }
+
+  fun enterImagePreviewScreen(selectedImageIndex: Int, images: List<String>) {
+    this._enterImagePreviewUiState.value = true
+    this._momentsPageImagePreviewUiState.value = _momentsPageImagePreviewUiState.value.copy(
+      currentImageList = images,
+      currentImagePreviewIndex = selectedImageIndex
+    )
+  }
+
+  fun exitImagePreviewScreen() {
+    this._enterImagePreviewUiState.value = false
   }
 }
