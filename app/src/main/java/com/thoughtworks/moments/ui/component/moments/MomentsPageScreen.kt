@@ -45,11 +45,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.thoughtworks.moments.R
 import com.thoughtworks.moments.data.Moment
 import com.thoughtworks.moments.ui.theme.White100
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun MomentsPageScreen(
   modifier: Modifier = Modifier,
-  viewModel: MomentsPageViewModel = MomentsPageViewModel()
+  viewModel: MomentsPageViewModel = koinViewModel()
 ) {
   val momentsPageUiState by viewModel.momentsPageUiState.collectAsStateWithLifecycle()
 
