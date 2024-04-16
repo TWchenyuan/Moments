@@ -12,6 +12,7 @@ val Pink40 = Color(0xFF7D5260)
 
 val Dark100 = Color(0xFF000000)
 val Dark20 = Color(0xFF333333)
+val Dark10 = Color(0xFF1E1E1E)
 
 val White100 = Color(0xFFFFFFFF)
 val White97 = Color(0xFFF7F7F7)
@@ -19,3 +20,5 @@ val White93 = Color(0xFFEDEDED)
 
 val Brand100 = Color(0xFF07C160)
 val Brand120 = Color(0xFF39CD80)
+
+val Link100 = Color(0xFF576B95)
