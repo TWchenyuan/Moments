@@ -22,3 +22,5 @@ val Brand100 = Color(0xFF07C160)
 val Brand120 = Color(0xFF39CD80)
 
 val Link100 = Color(0xFF576B95)
+
+val DividerColor = Color(0xFFEDEDED)
