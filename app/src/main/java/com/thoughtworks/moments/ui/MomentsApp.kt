@@ -11,8 +11,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.thoughtworks.moments.ui.navigation.MOMENTS_NAVIGATION_ITEM_LIST
 import com.thoughtworks.moments.ui.navigation.MomentsNavigationBar
+import com.thoughtworks.moments.ui.navigation.NavigationItems
 import com.thoughtworks.moments.ui.navigation.navigateTo
 
 @Composable
@@ -30,7 +30,7 @@ fun MomentsAppContent(modifier: Modifier = Modifier) {
     modifier = modifier.fillMaxSize(),
     bottomBar = {
       AnimatedVisibility(
-        visible = MOMENTS_NAVIGATION_ITEM_LIST.map { it.route.route }
+        visible = NavigationItems.map { it.route.route }
           .contains(selectedDestination)
       ) {
         MomentsNavigationBar(
