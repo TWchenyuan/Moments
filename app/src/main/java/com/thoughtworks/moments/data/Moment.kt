@@ -58,6 +58,6 @@ fun MomentEntity.toMoment(): Moment {
     sender = gson.fromJson(this.sender, object : TypeToken<Moment.Sender>() {}.type),
     comments = gson.fromJson(this.comments, object : TypeToken<List<Moment.Comment>>() {}.type),
     createdAt = this.createdAt,
-    likes = gson.fromJson(this.images, object : TypeToken<List<String>>() {}.type)
+    likes = gson.fromJson(this.likes, object : TypeToken<List<String>>() {}.type)
   )
 }
