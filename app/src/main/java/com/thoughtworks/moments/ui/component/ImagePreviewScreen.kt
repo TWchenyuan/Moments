@@ -12,7 +12,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import coil.compose.AsyncImage
+import com.thoughtworks.moments.R
 import com.thoughtworks.moments.ui.theme.Dark100
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -39,7 +41,7 @@ fun ImagePreviewScreen(
         modifier = Modifier.fillMaxWidth(),
         contentScale = ContentScale.Fit,
         model = images[it],
-        contentDescription = "image preview screen image"
+        contentDescription = stringResource(R.string.image_preview_screen_image)
       )
     }
   }

@@ -30,6 +30,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -103,7 +104,7 @@ fun MomentsPageImmersiveCover(
         model = cover,
         modifier = Modifier.fillMaxWidth(),
         placeholder = painterResource(id = defaultCover),
-        contentDescription = "immersive image"
+        contentDescription = stringResource(R.string.moments_page_image_immersive_image)
       )
       IconButton(
         modifier = Modifier
@@ -114,7 +115,7 @@ fun MomentsPageImmersiveCover(
       ) {
         Icon(
           imageVector = ImageVector.vectorResource(R.drawable.filled_camera),
-          contentDescription = "publish your moments"
+          contentDescription = stringResource(R.string.moments_page_publish_your_moments)
         )
       }
       Account(
@@ -150,7 +151,7 @@ fun Account(
           .clip(RoundedCornerShape(8.dp)),
         model = avatar,
         placeholder = painterResource(id = defaultAvatar),
-        contentDescription = "account avatar"
+        contentDescription = stringResource(R.string.moments_page_account_avatar)
       )
     }
   }

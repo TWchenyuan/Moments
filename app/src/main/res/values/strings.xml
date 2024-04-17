@@ -21,4 +21,13 @@
     <string name="discover_item_listen_title">Listen</string>
     <string name="ic_discover_item_moments_icon">moments icon</string>
     <string name="ic_arrow_icon">arrow icon</string>
+    <string name="ic_like_icon">like icon</string>
+    <string name="moments_page_show_more_text">Show More</string>
+    <string name="moments_page_show_less">Show Less</string>
+    <string name="moments_page_friends_avatar">avatar</string>
+    <string name="moments_page_image_in_gallery">image in gallery</string>
+    <string name="moments_page_image_immersive_image">immersive image</string>
+    <string name="moments_page_publish_your_moments">publish your moments</string>
+    <string name="moments_page_account_avatar">account avatar</string>
+    <string name="image_preview_screen_image">image preview screen image</string>
 </resources>

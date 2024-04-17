@@ -123,6 +123,8 @@ fun MomentDivider() {
   }
 }
 
+val LikeAndCommentTextIconId = "inlineContent"
+
 @Composable
 fun LikeAndComments(
   modifier: Modifier = Modifier,
@@ -139,13 +141,13 @@ fun LikeAndComments(
     if (likes.isNotEmpty()) {
       Text(
         text = buildAnnotatedString {
-          appendInlineContent("inlineContent", "[like]")
+          appendInlineContent(LikeAndCommentTextIconId, "[like]")
           append(likeListString)
         },
         style = MaterialTheme.typography.labelLarge,
         inlineContent = mapOf(
           Pair(
-            "inlineContent",
+            LikeAndCommentTextIconId,
             InlineTextContent(
               placeholder = Placeholder(
                 width = 16.sp,
@@ -156,7 +158,7 @@ fun LikeAndComments(
               Icon(
                 modifier = Modifier.fillMaxWidth(),
                 imageVector = ImageVector.vectorResource(R.drawable.outlined_like),
-                contentDescription = "like icon"
+                contentDescription = stringResource(R.string.ic_like_icon)
               )
             }
           )
@@ -277,7 +279,11 @@ fun FriendsMomentContent(modifier: Modifier = Modifier, content: String, minimiz
     if (hasOverflow) {
       Text(
         modifier = Modifier.clickable { expanded = !expanded },
-        text = if (!expanded) "Show More" else "Show Less",
+        text = if (!expanded) {
+          stringResource(R.string.moments_page_show_more_text)
+        } else {
+          stringResource(R.string.moments_page_show_less)
+        },
         style = MaterialTheme.typography.labelLarge
       )
     }
@@ -299,7 +305,7 @@ fun FriendsAvatar(avatar: String) {
     AsyncImage(
       model = avatar,
       placeholder = painterResource(id = R.drawable.default_avatar),
-      contentDescription = "avatar",
+      contentDescription = stringResource(R.string.moments_page_friends_avatar),
       modifier = Modifier
         .size(60.dp)
         .padding(10.dp)
@@ -345,7 +351,7 @@ fun MomentImageGallery(
       itemsIndexed(images) { index, item ->
         AsyncImage(
           model = item,
-          contentDescription = "image in gallery",
+          contentDescription = stringResource(id = R.string.moments_page_image_in_gallery),
           contentScale = ContentScale.Crop,
           modifier = Modifier
             .height(spec.imageHeight)
