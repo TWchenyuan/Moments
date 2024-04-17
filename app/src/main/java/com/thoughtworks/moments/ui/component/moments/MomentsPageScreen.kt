@@ -98,6 +98,7 @@ fun MomentsPageImmersiveCover(
     Box(
       modifier = modifier
         .fillMaxWidth()
+        .padding(bottom = 30.dp)
         .wrapContentHeight()
     ) {
       AsyncImage(
