@@ -76,6 +76,15 @@ dependencies {
   implementation(libs.converter.gson)
   implementation(libs.retrofit)
 
+  // room
+  implementation(libs.androidx.room.runtime)
+  implementation(libs.androidx.room.ktx)
+  implementation(libs.androidx.paging.runtime.ktx)
+  annotationProcessor(libs.androidx.room.compiler)
+
+  implementation(libs.androidx.paging.compose)
+  implementation(libs.androidx.paging.runtime.ktx)
+
   testImplementation(libs.junit)
   androidTestImplementation(libs.androidx.junit)
   androidTestImplementation(libs.androidx.espresso.core)
@@ -83,6 +92,7 @@ dependencies {
   androidTestImplementation(libs.androidx.ui.test.junit4)
 
   testImplementation(libs.koin.test.junit4)
+  testImplementation(libs.truth)
 
   debugImplementation(libs.androidx.ui.tooling)
   debugImplementation(libs.androidx.ui.test.manifest)
