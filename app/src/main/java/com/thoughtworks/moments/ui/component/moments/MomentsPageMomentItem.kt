@@ -32,6 +32,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -46,6 +47,7 @@ import androidx.compose.ui.text.PlaceholderVerticalAlign
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -92,7 +94,7 @@ fun MomentsPageMomentItem(
       FriendsAvatar(moment.sender.avatar)
       Column(modifier = Modifier.padding(start = 10.dp, end = 10.dp)) {
         FriendsNick(moment.sender.nick)
-        FriendsMomentContent(moment.content)
+        FriendsMomentContent(content = moment.content, minimizedMaxLines = 5)
         if (moment.images.isNotEmpty()) {
           MomentImageGallery(images = moment.images.take(9), onImageClick = onImageClick)
         }
@@ -211,7 +213,8 @@ fun TimeAndMoreButton(createdAt: Long) {
         ) {
           Row(
             modifier = Modifier
-              .wrapContentWidth().padding(5.dp),
+              .wrapContentWidth()
+              .padding(5.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.End
           ) {
@@ -257,41 +260,28 @@ fun TimeAndMoreButton(createdAt: Long) {
         )
       }
     }
-//    Row(
-//      modifier = Modifier
-//        .fillMaxWidth()
-//        .padding(vertical = 10.dp)
-//        .wrapContentHeight(),
-//      verticalAlignment = Alignment.CenterVertically,
-//      horizontalArrangement = Arrangement.SpaceBetween
-//    ) {
-//      Text(
-//        text = createdAt.maskTime(),
-//        style = TextStyle.Default.copy(color = Dark10, fontSize = 15.sp)
-//      )
-//      IconButton(
-//        modifier = Modifier
-//          .background(White97)
-//          .clip(RoundedCornerShape(3.dp))
-//          .width(20.dp)
-//          .height(15.dp),
-//
-//        onClick = { expanded.value = true }
-//      ) {
-//        Icon(
-//          imageVector = ImageVector.vectorResource(R.drawable.outlined_more),
-//          contentDescription = "more button",
-//          tint = Link100
-//        )
-//      }
-//    }
   }
 }
 
 @Composable
-fun FriendsMomentContent(content: String) {
-  // TODO show more
-  Text(text = content, modifier = Modifier.padding(vertical = 3.dp))
+fun FriendsMomentContent(modifier: Modifier = Modifier, content: String, minimizedMaxLines: Int) {
+  var expanded by remember { mutableStateOf(false) }
+  var hasOverflow by remember { mutableStateOf(false) }
+  Column(modifier = modifier.fillMaxWidth()) {
+    Text(
+      text = content,
+      maxLines = if (expanded) Int.MAX_VALUE else minimizedMaxLines,
+      overflow = TextOverflow.Ellipsis,
+      onTextLayout = { hasOverflow = it.hasVisualOverflow || expanded }
+    )
+    if (hasOverflow) {
+      Text(
+        modifier = Modifier.clickable { expanded = !expanded },
+        text = if (!expanded) "Show More" else "Show Less",
+        style = MaterialTheme.typography.labelLarge
+      )
+    }
+  }
 }
 
 @Composable
