@@ -13,4 +13,12 @@
     <string name="ic_like_action_icon">like action icon</string>
     <string name="ic_comment_action_icon">comment action icon</string>
     <string name="ic_more_button">more button</string>
+    <string name="discover_page_title">Discover</string>
+    <string name="discover_item_moments_title">Moments</string>
+    <string name="discover_item_channels_title">Channels</string>
+    <string name="discover_item_lives_title">Lives</string>
+    <string name="discover_item_scan_title">Scan</string>
+    <string name="discover_item_listen_title">Listen</string>
+    <string name="ic_discover_item_moments_icon">moments icon</string>
+    <string name="ic_arrow_icon">arrow icon</string>
 </resources>

@@ -2,6 +2,7 @@ package com.thoughtworks.moments.ui.component
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
@@ -25,8 +27,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.thoughtworks.moments.R
 import com.thoughtworks.moments.ui.theme.Dark100
@@ -37,10 +43,18 @@ fun MomentsDiscoverScreen(modifier: Modifier = Modifier, navController: NavHostC
   Column(
     modifier = modifier
       .fillMaxSize()
-      .windowInsetsPadding(WindowInsets.statusBars)
+      .windowInsetsPadding(WindowInsets.statusBars),
+    verticalArrangement = Arrangement.Center
   ) {
-//  TODO top bar
-    Text(text = "Discover", color = Dark100)
+    Text(
+      modifier = Modifier
+        .fillMaxWidth()
+        .padding(vertical = 10.dp),
+      text = stringResource(R.string.discover_page_title),
+      color = Dark100,
+      style = TextStyle.Default.copy(fontSize = 20.sp),
+      textAlign = TextAlign.Center
+    )
     DiscoverList(navigateTo = navController::navigate)
   }
 }
@@ -59,10 +73,30 @@ fun DiscoverList(modifier: Modifier = Modifier, navigateTo: (destination: String
     ) {
       DiscoverListItem(
         leftIcon = R.drawable.moment,
-        title = "Moments",
+        title = stringResource(R.string.discover_item_moments_title),
         onClick = { navigateTo("MomentsPage") }
       )
-      DiscoverListItem(leftIcon = R.drawable.moment, title = "Others")
+      DiscoverListItem(
+        leftIcon = R.drawable.moment,
+        title = stringResource(R.string.discover_item_channels_title)
+      )
+      DiscoverListItem(
+        leftIcon = R.drawable.favorites,
+        title = stringResource(R.string.discover_item_lives_title)
+      )
+      Spacer(
+        modifier = Modifier
+          .fillMaxWidth()
+          .height(2.dp)
+      )
+      DiscoverListItem(
+        leftIcon = R.drawable.cards,
+        title = stringResource(R.string.discover_item_scan_title)
+      )
+      DiscoverListItem(
+        leftIcon = R.drawable.filled_music,
+        title = stringResource(R.string.discover_item_listen_title)
+      )
     }
   }
 }
@@ -95,17 +129,17 @@ fun DiscoverListItem(
           .size(36.dp)
           .padding(8.dp),
         imageVector = ImageVector.vectorResource(leftIcon),
-        contentDescription = "moments icon",
+        contentDescription = stringResource(R.string.ic_discover_item_moments_icon),
         tint = Color.Unspecified
       )
-      Text(title)
+      Text(modifier = Modifier.padding(start = 10.dp), text = title)
       Spacer(modifier = Modifier.weight(1f))
       Icon(
         modifier = Modifier
           .size(26.dp)
           .padding(end = 8.dp),
         imageVector = ImageVector.vectorResource(rightIcon),
-        contentDescription = "arrow icon"
+        contentDescription = stringResource(R.string.ic_arrow_icon)
       )
     }
   }

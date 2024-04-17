@@ -1,8 +1,9 @@
 package com.thoughtworks.moments.ui
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -33,20 +34,33 @@ fun MomentsAppContent(modifier: Modifier = Modifier) {
   val navBackStackEntry by navController.currentBackStackEntryAsState()
   val selectedDestination = navBackStackEntry?.destination?.route ?: Chat.route
 
-  // TODO use Scaffold
-  Column(modifier = modifier.fillMaxSize()) {
-    MomentsNavHost(modifier = modifier.weight(1f), navController = navController)
-    AnimatedVisibility(
-      visible = MOMENTS_NAVIGATION_ITEM_LIST.map { it.route }
-        .contains(selectedDestination)
-    ) {
-      MomentsNavigationBar(selectedDestination, navController::navigateTo)
+  Scaffold(
+    modifier = modifier.fillMaxSize(),
+    bottomBar = {
+      AnimatedVisibility(
+        visible = MOMENTS_NAVIGATION_ITEM_LIST.map { it.route }
+          .contains(selectedDestination)
+      ) {
+        MomentsNavigationBar(
+          selectedDestination = selectedDestination,
+          navController::navigateTo
+        )
+      }
     }
+  ) {
+    MomentsNavHost(
+      navController = navController,
+      paddingValues = it
+    )
   }
 }
 
 @Composable
-fun MomentsNavHost(modifier: Modifier, navController: NavHostController) {
+fun MomentsNavHost(
+  modifier: Modifier = Modifier,
+  navController: NavHostController,
+  paddingValues: PaddingValues
+) {
   NavHost(
     modifier = modifier,
     navController = navController,
