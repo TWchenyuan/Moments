@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.thoughtworks.moments.R
 import com.thoughtworks.moments.ui.Screen
+import com.thoughtworks.moments.ui.navigation.navigateTo
 import com.thoughtworks.moments.ui.theme.Dark100
 import com.thoughtworks.moments.ui.theme.White100
 
@@ -56,12 +57,12 @@ fun MomentsDiscoverScreen(modifier: Modifier = Modifier, navController: NavHostC
       style = TextStyle.Default.copy(fontSize = 20.sp),
       textAlign = TextAlign.Center
     )
-    DiscoverList(navigateTo = navController::navigate)
+    DiscoverList(navigateTo = navController::navigateTo)
   }
 }
 
 @Composable
-fun DiscoverList(modifier: Modifier = Modifier, navigateTo: (destination: String) -> Unit) {
+fun DiscoverList(modifier: Modifier = Modifier, navigateTo: (screen: Screen) -> Unit) {
   Box(
     modifier = Modifier
       .fillMaxSize()
@@ -75,7 +76,7 @@ fun DiscoverList(modifier: Modifier = Modifier, navigateTo: (destination: String
       DiscoverListItem(
         leftIcon = R.drawable.moment,
         title = stringResource(R.string.discover_item_moments_title),
-        onClick = { navigateTo(Screen.Moment.route) }
+        onClick = { navigateTo(Screen.Moment) }
       )
       DiscoverListItem(
         leftIcon = R.drawable.moment,
