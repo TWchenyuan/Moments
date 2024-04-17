@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -39,6 +38,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.AsyncImage
 import com.thoughtworks.moments.R
 import com.thoughtworks.moments.data.Account
@@ -56,10 +57,11 @@ fun MomentsPageScreen(
 
   val enterImagePreview by viewModel.enterImagePreviewUiState.collectAsStateWithLifecycle()
   val imagePreviewUiState by viewModel.momentsPageImagePreviewUiState.collectAsStateWithLifecycle()
+  val latestMoments = viewModel.latestMoments.collectAsLazyPagingItems()
 
   Box(modifier = modifier.fillMaxSize()) {
     MomentListContent(
-      moments = momentsPageUiState.latestMoments,
+      moments = latestMoments,
       currentAccount = momentsPageUiState.current,
       onImageClick = { selectedImageIndex, images ->
         viewModel.enterImagePreviewScreen(
@@ -157,7 +159,7 @@ fun Account(
 @Composable
 fun MomentListContent(
   modifier: Modifier = Modifier,
-  moments: List<Moment>,
+  moments: LazyPagingItems<Moment>,
   currentAccount: Account,
   onImageClick: (selectedImageIndex: Int, images: List<String>) -> Unit
 ) {
@@ -178,8 +180,10 @@ fun MomentListContent(
           nick = currentAccount.nick
         )
       }
-      items(moments) {
-        MomentsPageMomentItem(moment = it, onImageClick = onImageClick)
+      items(count = moments.itemCount) { index ->
+        moments[index]?.let {
+          MomentsPageMomentItem(moment = it, onImageClick = onImageClick)
+        }
       }
     }
   }

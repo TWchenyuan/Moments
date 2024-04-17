@@ -2,17 +2,18 @@ package com.thoughtworks.moments.ui.component.moments
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
 import com.thoughtworks.moments.data.Account
 import com.thoughtworks.moments.data.Moment
 import com.thoughtworks.moments.data.repository.AccountRepository
 import com.thoughtworks.moments.data.repository.MomentRepository
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 data class MomentsPageUiState(
   val current: Account = Account("", "", "", ""),
-  val latestMoments: List<Moment> = emptyList(),
   val loadError: String? = null
 )
 
@@ -43,6 +44,7 @@ class MomentsPageViewModel(
   private val _enterImagePreviewUiState: MutableStateFlow<Boolean> = MutableStateFlow(false)
   val enterImagePreviewUiState: StateFlow<Boolean> get() = _enterImagePreviewUiState
 
+  val latestMoments: Flow<PagingData<Moment>> = this.moments.getPagingMoments(5)
   init {
     loadMoments()
   }
@@ -51,9 +53,7 @@ class MomentsPageViewModel(
     viewModelScope.launch {
       try {
         val current = accounts.currentAccount()
-        val moments = moments.latestMoments()
         _momentsPageUiState.value = _momentsPageUiState.value.copy(
-          latestMoments = moments,
           current = current
         )
       } catch (e: Exception) {

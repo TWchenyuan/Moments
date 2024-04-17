@@ -5,6 +5,7 @@ import com.thoughtworks.moments.data.database.provideMomentDao
 import com.thoughtworks.moments.data.network.provideAccountAPI
 import com.thoughtworks.moments.data.network.provideMomentAPI
 import com.thoughtworks.moments.data.network.provideRetrofit
+import com.thoughtworks.moments.data.paging.MomentSource
 import com.thoughtworks.moments.data.repository.AccountRepository
 import com.thoughtworks.moments.data.repository.AccountRepositoryImpl
 import com.thoughtworks.moments.data.repository.MomentRepository
@@ -25,6 +26,7 @@ val networkModule = module {
   singleOf(::provideMomentAPI)
 }
 val appModule = module {
+  singleOf(::MomentSource)
   singleOf(::AccountRepositoryImpl) { bind<AccountRepository>() }
   singleOf(::MomentRepositoryImpl) { bind<MomentRepository>() }
   viewModelOf(::MomentsPageViewModel)
