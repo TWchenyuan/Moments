@@ -3,16 +3,17 @@ package com.thoughtworks.moments.ui.navigation
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.thoughtworks.moments.R
+import com.thoughtworks.moments.ui.Screen
 
 sealed class MomentsNavigationItem(
-  val route: String,
+  val route: Screen,
   val unSelectedIconId: Int,
   val selectedIconId: Int,
   val iconTextId: Int,
   val textLabelId: Int
 ) {
   data object Chat : MomentsNavigationItem(
-    route = "Chat",
+    route = Screen.Chat,
     unSelectedIconId = R.drawable.outlined_chats,
     selectedIconId = R.drawable.filled_chats,
     iconTextId = R.string.tab_chat_icon_desc,
@@ -20,7 +21,7 @@ sealed class MomentsNavigationItem(
   )
 
   data object Contact : MomentsNavigationItem(
-    route = "Contact",
+    route = Screen.Contact,
     unSelectedIconId = R.drawable.outlined_contacts,
     selectedIconId = R.drawable.filled_contacts,
     iconTextId = R.string.tab_contact_icon_desc,
@@ -28,7 +29,7 @@ sealed class MomentsNavigationItem(
   )
 
   data object Discover : MomentsNavigationItem(
-    route = "Discover",
+    route = Screen.Discover,
     unSelectedIconId = R.drawable.outlined_discover,
     selectedIconId = R.drawable.filled_discover,
     iconTextId = R.string.tab_discover_icon_desc,
@@ -36,7 +37,7 @@ sealed class MomentsNavigationItem(
   )
 
   data object Me : MomentsNavigationItem(
-    route = "Me",
+    route = Screen.Me,
     unSelectedIconId = R.drawable.outlined_me,
     selectedIconId = R.drawable.filled_me,
     iconTextId = R.string.tab_me_icon_dsc,
@@ -51,7 +52,7 @@ val MOMENTS_NAVIGATION_ITEM_LIST = listOf(
   MomentsNavigationItem.Me
 )
 
-fun NavHostController.navigateTo(destination: MomentsNavigationItem) {
+fun NavHostController.navigateTo(destination: Screen) {
   this.navigate(destination.route) {
     popUpTo(this@navigateTo.graph.findStartDestination().id) {
       saveState = true

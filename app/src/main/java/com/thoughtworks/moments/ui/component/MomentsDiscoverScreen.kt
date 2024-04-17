@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.thoughtworks.moments.R
+import com.thoughtworks.moments.ui.Screen
 import com.thoughtworks.moments.ui.theme.Dark100
 import com.thoughtworks.moments.ui.theme.White100
 
@@ -74,7 +75,7 @@ fun DiscoverList(modifier: Modifier = Modifier, navigateTo: (destination: String
       DiscoverListItem(
         leftIcon = R.drawable.moment,
         title = stringResource(R.string.discover_item_moments_title),
-        onClick = { navigateTo("MomentsPage") }
+        onClick = { navigateTo(Screen.Moment.route) }
       )
       DiscoverListItem(
         leftIcon = R.drawable.moment,

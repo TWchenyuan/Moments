@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.thoughtworks.moments.ui.Screen
 import com.thoughtworks.moments.ui.theme.Brand100
 import com.thoughtworks.moments.ui.theme.Brand120
 import com.thoughtworks.moments.ui.theme.White100
@@ -20,7 +21,7 @@ import com.thoughtworks.moments.ui.theme.White100
 @Composable
 fun MomentsNavigationBar(
   selectedDestination: String,
-  navigateToTopLevelDestination: (MomentsNavigationItem) -> Unit
+  navigateToTopLevelDestination: (Screen) -> Unit
 ) {
   NavigationBar(
     modifier = Modifier
@@ -28,10 +29,10 @@ fun MomentsNavigationBar(
     containerColor = White100
   ) {
     MOMENTS_NAVIGATION_ITEM_LIST.forEach {
-      val selected = selectedDestination == it.route
+      val selected = selectedDestination == it.route.route
       NavigationBarItem(
         selected = selected,
-        onClick = { navigateToTopLevelDestination(it) },
+        onClick = { navigateToTopLevelDestination(it.route) },
         icon = {
           Icon(
             imageVector = ImageVector.vectorResource(
