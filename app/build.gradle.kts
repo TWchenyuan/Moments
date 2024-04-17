@@ -2,6 +2,7 @@ plugins {
   alias(libs.plugins.androidApplication)
   alias(libs.plugins.jetbrainsKotlinAndroid)
   alias(libs.plugins.jlleitschuhGradleKtlint)
+  kotlin("kapt")
 }
 
 android {
@@ -81,6 +82,7 @@ dependencies {
   implementation(libs.androidx.room.ktx)
   implementation(libs.androidx.paging.runtime.ktx)
   annotationProcessor(libs.androidx.room.compiler)
+  kapt(libs.androidx.room.compiler)
 
   implementation(libs.androidx.paging.compose)
   implementation(libs.androidx.paging.runtime.ktx)

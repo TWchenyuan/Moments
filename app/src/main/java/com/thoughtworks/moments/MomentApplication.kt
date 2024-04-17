@@ -2,6 +2,7 @@ package com.thoughtworks.moments
 
 import android.app.Application
 import com.thoughtworks.moments.di.appModule
+import com.thoughtworks.moments.di.databaseModule
 import com.thoughtworks.moments.di.networkModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -13,7 +14,7 @@ class MomentApplication : Application() {
     startKoin {
       androidContext(this@MomentApplication)
       androidLogger()
-      modules(appModule, networkModule)
+      modules(appModule, networkModule, databaseModule)
     }
   }
 }

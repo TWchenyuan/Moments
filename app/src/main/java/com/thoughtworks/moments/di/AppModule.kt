@@ -1,5 +1,7 @@
 package com.thoughtworks.moments.di
 
+import com.thoughtworks.moments.data.database.provideDatabase
+import com.thoughtworks.moments.data.database.provideMomentDao
 import com.thoughtworks.moments.data.network.provideAccountAPI
 import com.thoughtworks.moments.data.network.provideMomentAPI
 import com.thoughtworks.moments.data.network.provideRetrofit
@@ -13,6 +15,10 @@ import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
+val databaseModule = module {
+  singleOf(::provideDatabase)
+  singleOf(::provideMomentDao)
+}
 val networkModule = module {
   singleOf(::provideRetrofit)
   singleOf(::provideAccountAPI)
