@@ -13,7 +13,6 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.thoughtworks.moments.ui.navigation.MOMENTS_NAVIGATION_ITEM_LIST
 import com.thoughtworks.moments.ui.navigation.MomentsNavigationBar
-import com.thoughtworks.moments.ui.navigation.MomentsNavigationItem.Chat
 import com.thoughtworks.moments.ui.navigation.navigateTo
 
 @Composable
