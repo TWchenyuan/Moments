@@ -123,7 +123,7 @@ fun MomentDivider() {
   }
 }
 
-val LikeAndCommentTextIconId = "inlineContent"
+private const val LikeAndCommentTextIconId = "inlineContent"
 
 @Composable
 fun LikeAndComments(

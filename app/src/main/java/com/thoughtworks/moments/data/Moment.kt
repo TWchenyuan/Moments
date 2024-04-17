@@ -1,5 +1,8 @@
 package com.thoughtworks.moments.data
 
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.thoughtworks.moments.data.database.MomentEntity
 import com.thoughtworks.moments.data.network.model.MomentData
 import java.time.Duration
 import java.time.Instant
@@ -43,5 +46,18 @@ fun MomentData.toMoment(): Moment? {
     // TODO Real Date
     createdAt = Instant.now().minus(Duration.ofMinutes(10)).toEpochMilli(),
     likes = this.comments?.map { it.sender.nick } ?: emptyList()
+  )
+}
+fun MomentEntity.toMoment(): Moment {
+  val gson = Gson()
+
+  return Moment(
+    id = this.id,
+    content = this.content,
+    images = gson.fromJson(this.images, object : TypeToken<List<String>>() {}.type),
+    sender = gson.fromJson(this.sender, object : TypeToken<Moment.Sender>() {}.type),
+    comments = gson.fromJson(this.comments, object : TypeToken<List<Moment.Comment>>() {}.type),
+    createdAt = this.createdAt,
+    likes = gson.fromJson(this.images, object : TypeToken<List<String>>() {}.type)
   )
 }
